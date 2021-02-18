@@ -20,12 +20,3 @@ coklu secim yapmaya da izin veriyor. Action ve drama secili ise hem action hem d
 
 
 
-
-yapılcaklar : 
-1. searchClear Fonksiyonu yaz.
-2. dataHelper Ekle (Data işlemlerini içine at.)
-3. genre kodunu yaz.
-4. year kodunu yaz.
-5. css özelliğini değiştir.
-6. yapışkan notlardaki ödevleri yap.
-7. moviler cart'ta  gözüksün ama kendi fork klasöründe yap.
