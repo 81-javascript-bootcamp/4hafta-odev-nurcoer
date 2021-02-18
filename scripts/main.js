@@ -1,75 +1,90 @@
-import data from "./data.js";
-import {searchMovieByTitle, makeBgActive} from "./helpers.js";
+import { reset, clearSearch } from "./helpers.js";
+import { matchedMovies, fillTable, fillSearchObj } from "./dataHelper.js";
 
 class MoviesApp {
-    constructor(options) {
-        const {root, searchInput, searchForm, yearHandler, yearSubmitter} = options;
-        this.$tableEl = document.getElementById(root);
-        this.$tbodyEl = this.$tableEl.querySelector("tbody");
+  constructor(options) {
+    const {
+      root,
+      searchInput,
+      searchForm,
+      yearHandler,
+      yearSubmitter,
+      genreHandler,
+      genreSubmitter,
+      titleHandler,
+    } = options;
 
-        this.$searchInput = document.getElementById(searchInput);
-        this.$searchForm   = document.getElementById(searchForm);
-        this.yearHandler = yearHandler;
-        this.$yearSubmitter = document.getElementById(yearSubmitter);
-    }
+    this.$tableEl = document.getElementById(root);
+    this.$tbodyEl = this.$tableEl.querySelector("tbody");
 
-    createMovieEl(movie){
-        const {image, title, genre, year,id} = movie;
-        return `<tr data-id="${id}"><td><img src="${image}"></td><td>${title}</td><td>${genre}</td><td>${year}</td></tr>`
-    }
+    this.$searchInput = document.getElementById(searchInput);
+    this.$searchForm = document.getElementById(searchForm);
+    this.$yearSubmitter = document.getElementById(yearSubmitter);
+    this.yearHandler = yearHandler;
 
-    fillTable(){
-        /* const moviesHTML = data.reduce((acc, cur) => {
-            return acc + this.createMovieEl(cur);
-        }, "");*/
-        const moviesArr = data.map((movie) => {
-           return this.createMovieEl(movie)
-        }).join("");
-        this.$tbodyEl.innerHTML = moviesArr;
-    }
+    //çektiğim elemanlar.
+    this.$genreSubmitter = document.getElementById(genreSubmitter);
+    this.$searchYearEl = document.getElementById("year");
+    this.$searchGenreEl = document.getElementById("genre");
+    this.genreHandler = genreHandler;
+    this.titleHandler = titleHandler;
+  }
 
-    reset(){
-        this.$tbodyEl.querySelectorAll("tr").forEach((item) => {
-            item.style.background = "transparent";
-        })
-    }
+  handleSearch() {
+    this.$searchForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      reset(this.$tbodyEl);
+      clearSearch(this.titleHandler)
+      const searchValue = this.$searchInput.value;
+      if(searchValue != "") matchedMovies(searchValue, this.titleHandler);
+    });
+  }
 
+  handleYearFilter() {
+    this.$yearSubmitter.addEventListener("click", () => {
+      reset(this.$tbodyEl);
+      clearSearch(this.yearHandler);
+      const selectedYear = document.querySelector(
+        `input[name='${this.yearHandler}']:checked`
+      )
+      if(selectedYear) matchedMovies(selectedYear.value, this.yearHandler);
+    });
+  }
 
-    handleSearch(){
-        this.$searchForm.addEventListener("submit", (event) => {
-            event.preventDefault();
-            this.reset();
-            const searchValue = this.$searchInput.value;
-            const matchedMovies = data.filter((movie) => {
-                return searchMovieByTitle(movie, searchValue);
-            }).forEach(makeBgActive)
+  //seçilen genre listesine göre listeleme fonksiyonu
+  handleGenreFilter() {
+    this.$genreSubmitter.addEventListener("click", () => {
+      reset(this.$tbodyEl);
+      clearSearch(this.genreHandler);
+      let checkedGenre = document.querySelectorAll(`input[name='${this.genreHandler}']:checked`);
+      checkedGenre.forEach((genreEl) => {
+        matchedMovies(genreEl.value, this.genreHandler);
+      })  
+    });
+  }
 
-        });
-    }
-
-    handleYearFilter(){
-        this.$yearSubmitter.addEventListener("click", () => {
-            this.reset();
-            const selectedYear = document.querySelector(`input[name='${this.yearHandler}']:checked`).value
-            const matchedMovies = data.filter((movie) => {
-                return movie.year === selectedYear;
-            }).forEach(makeBgActive)
-        });
-    }
-
-    init(){
-        this.fillTable();
-        this.handleSearch();
-        this.handleYearFilter();
-    }
+  init() {
+    fillTable(this.$tbodyEl);
+    this.handleSearch();
+    this.handleYearFilter();
+    this.handleGenreFilter();
+    //benim eklediklerim
+    fillSearchObj(this.$searchYearEl, this.yearHandler);
+    fillSearchObj(this.$searchGenreEl, this.genreHandler);
+  }
 }
 
 let myMoviesApp = new MoviesApp({
-    root: "movies-table",
-    searchInput: "searchInput",
-    searchForm: "searchForm",
-    yearHandler: "year",
-    yearSubmitter: "yearSubmitter"
+  root: "movies-table",
+  searchInput: "searchInput",
+  searchForm: "searchForm",
+  yearHandler: "year",
+  yearSubmitter: "yearSubmitter",
+
+  //benim eklediklerim
+  genreHandler: "genre",
+  titleHandler: "title",
+  genreSubmitter: "genreSubmitter",
 });
 
 myMoviesApp.init();
