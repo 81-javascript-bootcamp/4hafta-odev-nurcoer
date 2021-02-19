@@ -17,3 +17,6 @@ coklu secim yapmaya da izin veriyor. Action ve drama secili ise hem action hem d
 
 #### Bonus
 - search yapildiktan sonra search yapilan inputu bosaltalim.
+
+
+

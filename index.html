@@ -16,44 +16,22 @@
             <div class="box">
                 <form id="searchForm">
                     <div class="mb-3">
-                        <label for="searchInput" class="form-label">Search Movie</label>
+                        <label for="searchInput" class="form-label"><h5>Search Movie</h5></label>
                         <input type="text" class="form-control" id="searchInput">
                     </div>
                     <button type="submit" class="btn btn-primary" >Search</button>
                 </form>
             </div>
-            <div class="box">
+            <div class="box" >
                 <h5>Filter by year</h5>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="year" id="year1" value="2008">
-                    <label class="form-check-label" for="year1">
-                        2008
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="year" id="year2" value="1993">
-                    <label class="form-check-label" for="year2">
-                        1993
-                    </label>
-                </div>
+                <div id = "year" ></div>
                 <button type="submit" class="btn btn-primary" id="yearSubmitter">Filter</button>
 
             </div>
-            <div class="box">
+            <div class="box" >
                 <h5>Filter by genre</h5>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                    <label class="form-check-label" for="flexCheckDefault">
-                        Action
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                    <label class="form-check-label" for="flexCheckChecked">
-                        Drama
-                    </label>
-                </div>
-                <button type="submit" class="btn btn-primary">Filter</button>
+                <div id="genre"></div>
+                <button type="submit" class="btn btn-primary" id="genreSubmitter">Filter</button>
 
             </div>
         </div>
@@ -68,12 +46,6 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Image</td>
-                        <td>Movie Name</td>
-                        <td>Action</td>
-                        <td>1990</td>
-                    </tr>
                 </tbody>
             </table>
         </div>

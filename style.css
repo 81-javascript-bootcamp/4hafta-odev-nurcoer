@@ -14,3 +14,7 @@ img {
     text-align: center;
     margin-top: 20px;
 }
+.selectedMovies {
+	box-shadow: 0 10px 20px -8px black;
+	border:1px solid coral;
+  }
